@@ -35,18 +35,31 @@ img {
 }
 
 #ventanaModal {
-    visibility: visible;
-    position: absolute;
+    display: none;
+    position: fixed;
     width: 52.5vw;
     height: 60vh;
-    background-color: white;
+    background-color: azure;
+    opacity: 1;
     border-radius: 10px;
     z-index: 1;
-    top: 25vh;
+    top: -70vh;
+    left: 22.5vw;
     box-shadow: 20px 20px 50px rgb(64, 64, 64);
     display: flex;
     justify-content: center;
     align-items: center;
+    /* animation: mostrarVentanaModal 2s; */
+}
+
+@keyframes mostrarVentanaModal {
+    from { top: -70vh; }
+    to { top: 25vh; }
+}
+
+@keyframes quitarVentanaModal {
+    from { top: 25vh; }
+    to { top: -70vh; }
 }
 
 .botonFlecha {
@@ -58,10 +71,12 @@ img {
     background-color: lightblue;
     border-radius: 6px;
     border: none;
+    transition: background-color 0.5s;
 }
 
 .botonFlecha:hover {
     background-color: rgb(144, 173, 183);
+    border: 2px solid rgb(60, 58, 58);
 }
 
 .flechas {
