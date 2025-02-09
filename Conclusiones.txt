@@ -1,0 +1,16 @@
+HTML
+
+Ventana modal fuera del main
+
+CSS
+
+Asignar clase con animación a ventana modal
+
+JS
+
+Todo dentro de 'window.onload = function(){ ... }'
+Función de activar animación con: 
+· el cambio de clase
+· los valores del final de la animación
+
+window.addEventListener con filtrado de evento.target
