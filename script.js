@@ -1,56 +1,74 @@
-let imagenActual = document.getElementById("imagenActual");
-let imagenModal = document.getElementById("imagenModal")
-let ventanaModal = document.getElementById("ventanaModal");
-let fondo = document.querySelector("main");
-let flechaAtras = document.getElementById("flechaAtras");
-let flechaAdelante = document.getElementById("flechaAdelante");
-let indiceActual
+window.onload = function () {
+    console.log("Cargado");
+    // Variables
+    let imagenActual = document.getElementById("imagenActual");
+    let imagenModal = document.getElementById("imagenModal")
+    let ventanaModal = document.getElementById("ventanaModal");
+    let flechaAtras = document.getElementById("flechaAtras");
+    let flechaAdelante = document.getElementById("flechaAdelante");
+    let main = document.querySelector("main");
+    let indiceActual = 0;
 
-const imagenes = [
-    "./recursos/azul.jpg",
-    "./recursos/rosa-azul.jpg",
-    "./recursos/morado-rojo.jpg"
-];
+    // Imágenes
+    const imagenes = [
+        "./recursos/azul.jpg",
+        "./recursos/rosa-azul.jpg",
+        "./recursos/morado-rojo.jpg"
+    ];
 
-// Se establece la primera imagen de forma predeterminada
-window.addEventListener('load', function () {
-    imagenActual.setAttribute("src", imagenes[0]);
-    imagenModal.setAttribute("src", imagenes[0]);
-    indiceActual = 0;
-    console.log("Recién cargado");
-})
+    function pasarFoto(indiceActual) {
+        let nuevoIndice;
 
-function cambiarFoto(indiceActual, accion) {
-    let nuevoIndice;
-    
-    if(accion == "siguiente"){
-        nuevoIndice = indiceActual == imagenes.length - 1 ? 0 : indiceActual + 1;
-    } else {
-        nuevoIndice = indiceActual == 0 ? indiceActual.length - 1 : indiceActual - 1;
+        if (indiceActual == imagenes.length - 1) {
+            nuevoIndice = 0;
+        } else {
+            nuevoIndice = indiceActual + 1;
+        }
+        establecerNuevaFoto(nuevoIndice)
     }
 
-    imagenActual.setAttribute("src", imagenes[nuevoIndice]);
-    imagenModal.setAttribute("src", imagenes[nuevoIndice]);
+    function retrocederFoto(indiceActual) {
+        let nuevoIndice;
 
-    indiceActual = nuevoIndice;
-}
+        if (indiceActual == 0) {
+            nuevoIndice = imagenes.length - 1;
+        } else {
+            nuevoIndice = indiceActual - 1;
+        }
 
-flechaAtras.addEventListener('click', function () {
-    cambiarFoto(indiceActual, "anterior")
-})
-
-flechaAdelante.addEventListener('click', function () {
-    cambiarFoto(indiceActual, "siguiente")
-})
-
-// Aparece la ventana modal
-imagenActual.addEventListener('click', function () {
-    ventanaModal.style.top = "25vh";
-})
-
-// Desaparece la ventana modal
-window.addEventListener('click', function (evento) {
-    if (evento.target != ventanaModal && evento.target != imagenActual) {
-        ventanaModal.style.top = "-70vh";
+        establecerNuevaFoto(nuevoIndice);
     }
-});
+
+    function establecerNuevaFoto(nuevoIndice) {
+        imagenActual.setAttribute("src", imagenes[nuevoIndice]);
+        imagenModal.setAttribute("src", imagenes[nuevoIndice]);
+        indiceActual = nuevoIndice;
+    }
+
+    function mostrarVentanaModal() {
+        ventanaModal.className = "animacionMostrarVentanaModal";
+        ventanaModal.style.top = "25vh";
+        main.style.opacity = "0.5";
+    }
+
+    flechaAtras.addEventListener('click', function () {
+        retrocederFoto(indiceActual);
+    })
+
+    flechaAdelante.addEventListener('click', function () {
+        pasarFoto(indiceActual);
+    })
+
+    // Aparece la ventana modal
+    imagenActual.addEventListener('click', mostrarVentanaModal)
+
+    // Desaparece la ventana modal
+    window.addEventListener('click', function (evento) {
+        if (evento.target != ventanaModal && evento.target != imagenActual &&
+            evento.target != flechaAtras && evento.target != flechaAdelante) {
+            ventanaModal.className = "animacionQuitarVentanaModal";
+            ventanaModal.style.top = "-70vh";
+            main.style.opacity = "1";
+        }
+    });
+};

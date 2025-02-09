@@ -40,7 +40,6 @@ img {
     width: 52.5vw;
     height: 60vh;
     background-color: azure;
-    opacity: 1;
     border-radius: 10px;
     z-index: 1;
     top: -70vh;
@@ -49,17 +48,24 @@ img {
     display: flex;
     justify-content: center;
     align-items: center;
-    /* animation: mostrarVentanaModal 2s; */
+}
+
+.animacionMostrarVentanaModal {
+    animation: mostrarVentanaModal 1s;
+}
+
+.animacionQuitarVentanaModal {
+    animation: quitarVentanaModal 1s;
 }
 
 @keyframes mostrarVentanaModal {
-    from { top: -70vh; }
-    to { top: 25vh; }
+    from { top: -70vh; opacity: 0;}
+    to { top: 25vh; opacity: 1;}
 }
 
 @keyframes quitarVentanaModal {
-    from { top: 25vh; }
-    to { top: -70vh; }
+    from { top: 25vh; opacity: 1; }
+    to { top: -70vh; opacity: 0; }
 }
 
 .botonFlecha {
@@ -87,4 +93,10 @@ img {
 
 #imagenModal {
     width: 40vw;
+}
+
+@media screen and (max-width: 1024px) {
+    #ventanaModal {
+        height: 40vh;
+    }
 }
